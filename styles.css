@@ -167,7 +167,7 @@ li {
 
 /* Footer Styles */
 footer {
-    background-color: #333;
+    background-color: black;
     color: #b3c300;
     text-align: center;
     padding: 1rem;
@@ -214,29 +214,31 @@ footer p {
     gap: 10px;
 }
 
-/* Budget Section */
 #budget-display {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    color: #b3c300;
+    display: block; /* Ensure it is visible */
+    text-align: center; /* Center-align contents */
+    position: relative; /* Allow absolute positioning if needed */
     margin-top: 10px;
+    color: #b3c300; /* Neon text color */
+    font-size: 1rem;
     font-weight: bold;
 }
+
 
 #budget-value {
     margin-left: 5px;
 }
 
+
+
 .budget-triangle {
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid #b3c300;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #36A2EB; /* Color of the triangle */
+    margin: 10px auto;
     cursor: pointer;
-    margin-left: 10px;
-    transition: transform 0.2s ease-in-out;
 }
 
 .budget-triangle:hover {
@@ -269,6 +271,148 @@ footer p {
 }
 
 
+.progress-bar-container {
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+/* General Modal Styling */
+#warning-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Ensure it appears on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    overflow: auto; /* Add scroll if needed */
+}
+
+#warning-modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #000000; /* Black for contrast */
+}
+
+
+
+/* Budget Alert Modal Styling */
+#warning-modal .modal-content {
+    background-color: #000000; /* Black background for the modal */
+    color: #ffffff; /* White text for readability */
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    width: 60%; /* Consistent modal width */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+/* Modal Title Styling */
+#warning-modal h2 {
+    color: #b3c300; /* Green-yellowish for the title */
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+
+/* Warning Message Styling */
+#warning-message {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    text-align: center;
+}
+
+
+/* OK Button Styling */
+#warning-ok-button {
+    background-color: #b3c300; /* Green-yellowish button */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 20px; /* Rounded corners */
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 20px auto;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+}
+
+#warning-ok-button:hover {
+    background-color: #99a300; /* Darker green-yellowish on hover */
+}
+
+/* Progress Bar Styling */
+#warning-modal .progress-bar {
+    width: 0%;
+    height: 10px;
+    background-color: green;
+    border-radius: 5px;
+    transition: width 0.3s ease-in-out;
+    margin-top: 20px;
+}
+
+
+
+
+
+/* Close Button Styling */
+#warning-modal .close {
+    color: #ffffff;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: -10px;
+}
+
+#warning-modal .close:hover {
+    color: #b3c300;
+}
+
+
+
+/* OK Button */
+#warning-ok-button {
+    display: block;
+    background-color: #36A2EB; /* Same blue as in other parts of the app */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-align: center;
+    margin: 20px auto 0;
+    cursor: pointer;
+    width: fit-content;
+}
+
+#warning-ok-button:hover {
+    background-color: #004f99; /* Darker shade of blue */
+}
+
+
+.progress-bar {
+    height: 20px;
+    background-color: green;
+    transition: width 0.3s ease;
+}
+
+
 /* Feedback Pop-up Styles */
 .feedback-popup {
     position: fixed;
@@ -288,7 +432,7 @@ footer p {
 }
 
 /* Progress Bar Styles */
-.progress-bar {
+.feedback-progress-bar {
     height: 3px;
     background-color: #444;
     width: 0%;
@@ -323,7 +467,7 @@ footer p {
     background-color: #b3c300; /* Change to greenish-yellow on hover */
 }
 
-#/* General styles for the chart section */
+/* General styles for the chart section */
 #charts-section {
     margin-top: 20px;
     padding: 15px;
@@ -389,23 +533,26 @@ canvas {
     margin-top: 15px; /* Ensure a consistent and minimal gap */
 }
 
-/* Budget Progress Bar Styles */
+
 #budget-progress-container {
+    display: none; /* Hide until a budget is set */
     width: 100%;
-    background-color: #444; /* Dark background for the progress container */
     height: 20px;
+    background-color: #444; /* Dark gray for contrast */
     border-radius: 10px;
     margin-top: 10px;
     overflow: hidden;
 }
 
+
+
 #budget-progress-bar {
-    width: 0%;
     height: 100%;
-    background-color: #36A2EB; /* Initial color: blue */
+    width: 0%; /* Initial state */
+    background-color: #36A2EB; /* Blue for default progress */
     transition: width 0.3s ease, background-color 0.3s ease;
-    border-radius: 10px;
 }
+
 
 
 
@@ -431,17 +578,17 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #b3c300;
-    color: #1a1a1a;
+    background-color: #b3c300; /* Neon green */
+    color: #1a1a1a; /* Dark text for contrast */
     padding: 1rem;
     border-radius: 4px;
-    font-family: 'Raleway', sans-serif;
     font-size: 1rem;
     z-index: 1000;
     display: none;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
+
 
 
 
@@ -452,9 +599,65 @@ canvas {
     font-size: 1.2rem;
 }
 
+/* Alert Modal */
+#budget-alert-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Overlay effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#budget-alert-modal .modal-content {
+    background-color: #222; /* Dark background */
+    color: #b3c300; /* Neon green text */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#budget-alert-modal .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa; /* Light gray close button */
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#budget-alert-modal .close:hover {
+    color: white; /* Highlight on hover */
+}
+
+#budget-alert-ok {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #b3c300;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#budget-alert-ok:hover {
+    background-color: #a6b000; /* Darker green on hover */
+}
 
 
 
+.auth-button:hover, .expense-button:hover {
+    transform: scale(1.02); /* Slightly increase size */
+    background-color: #a6b000; /* Darker green */
+}
 
 
 

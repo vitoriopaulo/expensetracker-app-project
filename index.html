@@ -17,6 +17,7 @@
     <h1>Welcome to ExpenseTracker!</h1>
     
     <div class="container">
+        <!-- Authentication Section -->
         <div id="auth-section" aria-labelledby="auth-heading">
             <h2 id="auth-heading">Sign Up</h2>
             <form id="signup-form" aria-label="Sign Up Form">
@@ -47,6 +48,7 @@
             </form>
         </div>
 
+        <!-- Expense Tracker Section -->
         <div id="expense-section" style="display: none;" aria-labelledby="expense-heading">
             <h2 id="expense-heading">Expense Tracker</h2>
         
@@ -58,102 +60,115 @@
             </div>
         
             <!-- Predefined Expenses List -->
-            <ul id="expense-list" aria-label="List of Expenses">
-                <!-- This will be populated by JavaScript -->
-            </ul>
+            <ul id="expense-list" aria-label="List of Expenses"></ul>
         
             <!-- Total Amount and Budget Section -->
-            <p id="total-amount" aria-label="Total Amount">
-                Total Amount: <span class="amount">$0.00</span>
-            </p>
-            <p id="budget-display" aria-label="Budget">
-                Budget: <span id="budget-value">$0.00</span>
-                <div class="budget-triangle"></div>
+            <p id="total-amount" aria-label="Total Amount">Total Amount: <span class="amount">$0.00</span></p>
+            
+            <!-- Budget Display -->
+            <div id="budget-display">
+                <p>Budget: <span id="budget-value">$0.00</span></p>
+                <div id="budget-triangle" class="budget-triangle" onclick="openBudgetModal()"></div>
                 <div id="budget-progress-container">
                     <div id="budget-progress-bar"></div>
                 </div>
-            </p>
+            </div>
         
             <!-- Chart Section -->
             <div id="charts-section">
                 <h3>Expense Visualization</h3>
                 <canvas id="expense-pie-chart" width="400" height="400"></canvas>
-                <div id="chart-legend" class="chart-legend"></div> <!-- Custom legend -->
+                <div id="chart-legend" class="chart-legend"></div>
             </div>
 
-
             <!-- Export Button -->
-<button id="export-button" class="expense-button" aria-label="Export Data">Export</button>
+            <button id="export-button" class="expense-button" aria-label="Export Data">Export</button>
         
             <!-- Save Button -->
             <button type="button" id="save-expenses" class="expense-button" aria-label="Save Expenses">Save</button>
         
             <!-- Log Out Button -->
-            <button type="button" id="logout-button" class="expense-button" aria-label="Log Out">Log out</button>
+            <button type="button" id="logout-button" class="expense-button" aria-label="Log Out">Log Out</button>
         </div>
         
-        
         <!-- Budget Modal -->
-        <div id="budget-modal" class="budget-modal" style="display: none;" aria-labelledby="budget-modal-heading" role="dialog">
+        <div id="budget-modal" class="modal" style="display: none;" aria-labelledby="budget-modal-heading" role="dialog">
             <div class="modal-content">
                 <span class="close" aria-label="Close Modal">&times;</span>
-                <h2 id="budget-modal-heading">Enter Monthly Budget:</h2>
+                <h2 id="budget-modal-heading">Enter Monthly Budget</h2>
                 <div class="input-container">
                     <input type="number" id="budget-input" placeholder="Enter budget amount" step="0.01" required aria-label="Budget Amount">
                 </div>
                 <button id="budget-ok-button" class="expense-button" aria-label="Submit Budget">OK</button>
             </div>
         </div>
+
+       <!-- Budget Alert Modal -->
+<div id="warning-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" aria-label="Close Warning Modal">&times;</span>
+        <h2>Budget Alert Warning</h2>
+        <p id="warning-message">You've exceeded your budget!</p>
+        <div class="progress-bar"></div>
+        <button id="warning-ok-button">OK</button>
+    </div>
+</div>
         
 
-    <!-- Modal for updating expense amounts -->
-    <div id="update-modal" class="modal" style="display: none;" aria-labelledby="update-modal-heading" role="dialog">
-        <div class="modal-content">
-            <span class="close" aria-label="Close Modal">&times;</span>
-            <h2 id="update-modal-heading">Update Expense</h2>
-            <div class="input-container">
-                <input type="number" id="update-amount" placeholder="Enter amount" step="0.01" required aria-label="Amount to Update">
-            </div>
-            <div class="modal-buttons">
-                <button id="add-amount" class="expense-button" aria-label="Add Amount">Add Amount</button>
-                <button id="subtract-amount" class="expense-button" aria-label="Subtract Amount">Subtract Amount</button>
-                <button id="reset-amount" class="expense-button" aria-label="Reset Amount">Reset Amount</button>
-                <button id="enter-new-amount" class="expense-button" aria-label="Enter New Amount">Enter New Amount</button>
-            </div>
+ <!-- Feedback Pop-up -->
+ <div id="feedback-popup" class="feedback-popup" style="display: none;" aria-live="assertive">
+    <div class="feedback-progress-bar"></div>
+</div>
+</div>
+
+
+
+        <!-- Export Modal -->
+<div id="export-modal" class="modal" style="display: none;" aria-labelledby="export-modal-heading" role="dialog">
+    <div class="modal-content">
+        <span class="close" aria-label="Close Export Modal">&times;</span>
+        <h2 id="export-modal-heading">Export Data</h2>
+        <p>Select an export format:</p>
+        <div class="export-buttons">
+            <button id="export-pdf" class="expense-button" aria-label="Export to PDF">Export to PDF</button>
+            <button id="export-csv" class="expense-button" aria-label="Export to CSV">Export to CSV</button>
+            <button id="export-ods" class="expense-button" aria-label="Export to ODS">Export to ODS</button>
         </div>
     </div>
+</div>
 
-    <!-- Feedback Pop-up -->
-    <div id="feedback-popup" class="feedback-popup" style="display: none;" aria-live="assertive">
-        <div class="progress-bar"></div> <!-- Progress bar for pop-ups -->
+
+
+<!-- Update Modal -->
+<div id="update-modal" class="modal" style="display: none;" role="dialog" aria-labelledby="update-modal-heading">
+    <div class="modal-content">
+        <span class="close" aria-label="Close Update Modal">&times;</span>
+        <h2 id="update-modal-heading">Update Expense</h2>
+        <div class="input-container">
+            <input type="number" id="update-amount" placeholder="Enter amount" step="0.01" required aria-label="Update Amount">
+        </div>
+        <button id="add-amount" class="expense-button" aria-label="Add Amount">Add</button>
+        <button id="subtract-amount" class="expense-button" aria-label="Subtract Amount">Subtract</button>
+        <button id="reset-amount" class="expense-button" aria-label="Reset Amount">Reset</button>
+        <button id="enter-new-amount" class="expense-button" aria-label="Enter New Amount">Set New</button>
     </div>
+</div>
 
-    <!-- Footer Section -->
+
+
+    <!-- Footer -->
     <footer>
         <p>Made with <span style="color: red;">&hearts;</span> by Vitorio Paulo</p>
     </footer>
 
-    <!-- Social media icons Section -->
+    <!-- Social Media Icons -->
     <div class="social-icons">
         <a href="https://www.instagram.com/vitoriopaulo.arch" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="https://www.facebook.com/vitoriopaulo.arch" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
         <a href="https://www.linkedin.com/in/vitoriopaulo" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         <a href="https://www.youtube.com/user/vitoriopaulo" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         <a href="https://www.github.com/vitoriopaulo" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      </div>
-
-      <!-- Export Modal -->
-<div id="export-modal" class="modal" style="display: none;" aria-labelledby="export-modal-heading" role="dialog">
-    <div class="modal-content">
-        <span class="close" aria-label="Close Modal">&times;</span>
-        <h2 id="export-modal-heading">Export Options</h2>
-        <div class="input-container">
-            <button id="export-pdf" class="expense-button" aria-label="Export Pie Chart as PDF">Export Pie Chart as PDF</button>
-            <button id="export-csv" class="expense-button" aria-label="Export Data as CSV">Export Data as CSV</button>
-            <button id="export-ods" class="expense-button" aria-label="Export Data as ODS">Export Data as ODS</button>
-        </div>
     </div>
-</div>
 
     <script src="script.js"></script>
 </body>
